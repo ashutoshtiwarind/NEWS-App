@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/components/navbar.css">
+    <style>
+      #container {
+        display:flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+      p {
+        width : 300px;
+      }
+      #container > div {
+        width: 20%;
+      }
+      .create img {
+        width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div id="navbar">
+
+    </div>
+
+
+    <div id="main-container"></div>
+  </body>
+</html>
+
+<script type="module">
+    import navbar from "/components/navbar.js";
+    let nav = document.getElementById("navbar");
+    nav.innerHTML = navbar();
+
+  // Api key = 157567dc04ab4449a928aced58a5b89a
+
+ 
+ //https://newsapi.org/v2/everything?q=Apple&from=2021-12-13&sortBy=popularity&apiKey=API_KEY
+  
+let container = document.getElementById("main-container");
+let api = "157567dc04ab4449a928aced58a5b89a";
+
+async function gggg() {
+    let res = await fetch(`https://newsapi.org/v2/everything?q=Apple&from=2021-12-13&sortBy=popularity&apiKey=${api}`)
+    let data = await res.json();
+    console.log(data.articles)
+    // return data
+    showNews(data.articles)
+
+}
+
+gggg()
+function showNews(data) {
+
+    data.forEach(news => {
+        const{title, content, author, urlToImage} = news;
+
+        let div = document.createElement("div");
+        div.className = "create"
+        let image = document.createElement("img");
+        image.src = urlToImage;
+
+        let author_name = document.createElement("p");
+        author_name.innerText = author;
+
+        let news_title = document.createElement("p");
+        news_title.innerText = title;
+
+        let news_content = document.createElement("p");
+        news_content.innerText = content;
+
+        div.append(image, author_name, news_title, news_content);
+        container.append(div);
+
+    });
+}
+
+// let b = document.getElementById("search-news");
+//   b.addEventListener("click", nameNews);
+//   async function nameNews() {
+//     // window.location.href = "search.html";
+//     const news_name = document.getElementById("news-name").value;
+
+//     if (news_name === "") {
+//       alert("please enter a movie name");
+//       return;
+//     }
+
+//     let response = await fetch(`https://newsapi.org/v2/everything?q=${news_name}&from=2021-12-13&sortBy=popularity&apiKey=${api}`);
+//     let data = await response.json();
+//     console.log(data);
+//   }
+// nameNews()
+//   function showNews(data) {
+
+// data.forEach(news => {
+//     const{title, content, author, urlToImage} = news;
+
+//     let div = document.createElement("div");
+//     div.className = "create"
+//     let image = document.createElement("img");
+//     image.src = urlToImage;
+
+//     let author_name = document.createElement("p");
+//     author_name.innerText = author;
+
+//     let news_title = document.createElement("p");
+//     news_title.innerText = title;
+
+//     let news_content = document.createElement("p");
+//     news_content.innerText = content;
+
+//     div.append(image, author_name, news_title, news_content);
+//     container.append(div);
+
+// });
+// }
+</script>

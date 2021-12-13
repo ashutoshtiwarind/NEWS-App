@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/components/navbar.css" />
+    <link rel="stylesheet" href="all.css" />
+  </head>
+  <body>
+    <div id="navbar"></div>
+    <h1>search</h1>
+
+    <div id="main-container"></div>
+  </body>
+</html>
+
+<script type="module">
+      import navbar from "/components/navbar.js";
+      let nav = document.getElementById("navbar");
+      nav.innerHTML = navbar();
+
+      let api = "157567dc04ab4449a928aced58a5b89a";
+
+
+      let b = document.getElementById("search-news");
+    //    b.addEventListener("click", nameNews);
+       
+  async function nameNews(news_name) {
+    // window.location.href = "search.html";
+    
+
+    if (news_name === "") {
+      alert("please enter a movie name");
+      return;
+    }
+
+    let response = await fetch(`https://newsapi.org/v2/everything?q=${news_name}&from=2021-12-13&sortBy=popularity&apiKey=${api}`);
+    let data = await response.json();
+    console.log(data);
+  }
+//   const news_name = document.getElementById("news-name").value;
+  nameNews("tesla")
+
+  function show(data) {
+      data.forEach(news => {
+        const{title, content, author, urlToImage} = news;
+
+let div = document.createElement("div");
+div.className = "create"
+let image = document.createElement("img");
+image.src = urlToImage;
+
+let author_name = document.createElement("p");
+author_name.innerText = author;
+
+let news_title = document.createElement("p");
+news_title.innerText = title;
+
+let news_content = document.createElement("p");
+news_content.innerText = content;
+
+div.append(image, author_name, news_title, news_content);
+container.append(div);
+      })
+  }
+</script>
